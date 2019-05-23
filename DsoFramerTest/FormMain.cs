@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Management;
 using System.IO;
 using Microsoft.Win32;
+using System.Runtime.InteropServices;
 
 namespace DsoFramerTest
 {
@@ -98,5 +99,26 @@ namespace DsoFramerTest
                 return false;
         }
 
+        private void btnPlay_Click(object sender, EventArgs e)
+        {
+            axFramerControl1.Activate();
+
+            SendKeys.SendWait("{F5}");
+
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            axFramerControl1.Activate();
+
+            SendKeys.SendWait("{Down}");
+        }
+
+        private void btnPrevious_Click(object sender, EventArgs e)
+        {
+            axFramerControl1.Activate();
+
+            SendKeys.SendWait("{Up}");
+        }
     }
 }

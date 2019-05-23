@@ -33,6 +33,9 @@
             this.button1 = new System.Windows.Forms.Button();
             this.axFramerControl1 = new AxDSOFramer.AxFramerControl();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.btnPlay = new System.Windows.Forms.Button();
+            this.btnNext = new System.Windows.Forms.Button();
+            this.btnPrevious = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.axFramerControl1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -58,13 +61,47 @@
             this.axFramerControl1.Size = new System.Drawing.Size(776, 397);
             this.axFramerControl1.TabIndex = 3;
             // 
+            // btnPlay
+            // 
+            this.btnPlay.Location = new System.Drawing.Point(94, 13);
+            this.btnPlay.Name = "btnPlay";
+            this.btnPlay.Size = new System.Drawing.Size(75, 23);
+            this.btnPlay.TabIndex = 4;
+            this.btnPlay.Text = "play";
+            this.btnPlay.UseVisualStyleBackColor = true;
+            this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
+            // 
+            // btnNext
+            // 
+            this.btnNext.Location = new System.Drawing.Point(256, 13);
+            this.btnNext.Name = "btnNext";
+            this.btnNext.Size = new System.Drawing.Size(75, 23);
+            this.btnNext.TabIndex = 5;
+            this.btnNext.Text = "Next";
+            this.btnNext.UseVisualStyleBackColor = true;
+            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
+            // 
+            // btnPrevious
+            // 
+            this.btnPrevious.Location = new System.Drawing.Point(175, 12);
+            this.btnPrevious.Name = "btnPrevious";
+            this.btnPrevious.Size = new System.Drawing.Size(75, 23);
+            this.btnPrevious.TabIndex = 6;
+            this.btnPrevious.Text = "Previous";
+            this.btnPrevious.UseVisualStyleBackColor = true;
+            this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnPrevious);
+            this.Controls.Add(this.btnNext);
+            this.Controls.Add(this.btnPlay);
             this.Controls.Add(this.axFramerControl1);
             this.Controls.Add(this.button1);
+            this.KeyPreview = true;
             this.Name = "FormMain";
             this.Text = "打开Office文件测试程序";
             ((System.ComponentModel.ISupportInitialize)(this.axFramerControl1)).EndInit();
@@ -77,6 +114,9 @@
         private System.Windows.Forms.Button button1;
         private AxDSOFramer.AxFramerControl axFramerControl1;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button btnPlay;
+        private System.Windows.Forms.Button btnNext;
+        private System.Windows.Forms.Button btnPrevious;
     }
 }
 
