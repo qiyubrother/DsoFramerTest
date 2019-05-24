@@ -21,29 +21,41 @@ namespace DsoFramerTest
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        /// <summary>
+        /// 打开文件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnOpen_Click(object sender, EventArgs e)
         {
-            string fileFullPath = $@"{System.Environment.CurrentDirectory}\dsoframer.ocx";
-            if (!File.Exists(fileFullPath))
+            var op = new OpenFileDialog();
+            if (op.ShowDialog() == DialogResult.OK)
             {
-                // 容器控件丢失
-                return;
-            }
-
-            bool isRegisted = IsRegistered("00460182-9E5E-11D5-B7C8-B8269041DD57");
-            if (isRegisted)
-            {
-                var op = new OpenFileDialog();
-                op.ShowDialog();
                 string strFileName = op.FileName;
                 //If the user does not cancel, open the document.
                 if (strFileName.Length != 0)
                 {
-                    this.axFramerControl1.Open(strFileName);
+                    OpenFile(strFileName);
                 }
+            }
+        }
+        /// <summary>
+        /// 打开幻灯片文件
+        /// </summary>
+        /// <param name="fileName"></param>
+        private void OpenFile(string fileName)
+        {
+            string fileFullPath = $@"{System.Environment.CurrentDirectory}\dsoframer.ocx";
+
+            if (!File.Exists(fileFullPath))
+            {
+                // 容器控件丢失
+                MessageBox.Show("容器控件丢失！");
                 return;
             }
-            else
+
+            bool isRegisted = IsRegistered("00460182-9E5E-11D5-B7C8-B8269041DD57");
+            if (!isRegisted)
             {
                 axFramerControl1.Toolbars = false;
                 axFramerControl1.Menubar = false;
@@ -51,15 +63,26 @@ namespace DsoFramerTest
 
                 File.Copy(fileFullPath, $@"{System.Environment.SystemDirectory}\dsoframer.ocx", true);
 
-                Regist($@"{System.Environment.SystemDirectory}\dsoframer.ocx");
+                if (!Regist($@"{System.Environment.SystemDirectory}\dsoframer.ocx"))
+                {
+                    // 注册失败
+                    MessageBox.Show("注册容器控件失败！");
+                    return;
+                }
             }
-        }
 
-        //注册dsoframer.ocx
+            this.axFramerControl1.Open(fileName);
+
+            return;
+        }
+        /// <summary>
+        /// 注册dsoframer.ocx
+        /// </summary>
+        /// <param name="fileFullName">ocx控件完整路径</param>
+        /// <returns></returns>
         private static bool Regist(string fileFullName)
         {
             bool result = false;
-         //   System.Diagnostics.Process p = System.Diagnostics.Process.Start("regsvr32", fileFullName + " /s");//注册完毕不显示是否成功的提示
 
              System.Diagnostics.Process p = System.Diagnostics.Process.Start("regsvr32", fileFullName);//注册完毕显示是否成功的提示
             if (p != null && p.HasExited)
@@ -70,35 +93,17 @@ namespace DsoFramerTest
             }
             return result;
         }
-        //获取当前操作系统的位数
-        private static string GetOSBitCount()
-        {
-            ConnectionOptions oConn = new ConnectionOptions();
-            System.Management.ManagementScope oMs = new System.Management.ManagementScope("\\\\localhost", oConn);
-            System.Management.ObjectQuery oQuery = new System.Management.ObjectQuery("select AddressWidth from Win32_Processor");
-            ManagementObjectSearcher oSearcher = new ManagementObjectSearcher(oMs, oQuery);
-            ManagementObjectCollection oReturnCollection = oSearcher.Get();
-            string addressWidth = null;
-
-            foreach (ManagementObject oReturn in oReturnCollection)
-                addressWidth = oReturn["AddressWidth"].ToString();
-
-            return addressWidth;
-        }
-        //判断控件是否已经注册
-        private static bool IsRegistered(String CLSID)
-        {
-            if (String.IsNullOrEmpty(CLSID))
-                return false;
-
-            String key = String.Format(@"CLSID\{{{0}}}", CLSID);
-            RegistryKey regKey = Registry.ClassesRoot.OpenSubKey(key);
-            if (regKey != null)
-                return true;
-            else
-                return false;
-        }
-
+        /// <summary>
+        /// 判断控件是否被注册
+        /// </summary>
+        /// <param name="CLSID"></param>
+        /// <returns></returns>
+        private static bool IsRegistered(String CLSID) => !String.IsNullOrEmpty(CLSID) && Registry.ClassesRoot.OpenSubKey(String.Format(@"CLSID\{{{0}}}", CLSID)) != null;
+        /// <summary>
+        /// 播放幻灯片
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnPlay_Click(object sender, EventArgs e)
         {
             axFramerControl1.Activate();
@@ -106,14 +111,22 @@ namespace DsoFramerTest
             SendKeys.SendWait("{F5}");
 
         }
-
+        /// <summary>
+        /// 下一张幻灯片
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnNext_Click(object sender, EventArgs e)
         {
             axFramerControl1.Activate();
 
             SendKeys.SendWait("{Down}");
         }
-
+        /// <summary>
+        /// 上一张幻灯片
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnPrevious_Click(object sender, EventArgs e)
         {
             axFramerControl1.Activate();
