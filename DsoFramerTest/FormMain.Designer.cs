@@ -66,7 +66,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "FormMain";
-            this.Text = "打开Office文件测试程序";
+            this.Text = "dsoframer.ocx 测试程序";
             this.pnlMain.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.axFramerControl1)).EndInit();
             this.ResumeLayout(false);

@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("DsoFramerTest")]
-[assembly: AssemblyDescription("dsoframer.dll 测试工具")]
+[assembly: AssemblyDescription("dsoframer.ocx 测试程序")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("DsoFramerTest")]
